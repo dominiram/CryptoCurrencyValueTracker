@@ -1,7 +1,11 @@
 package app.naum.myapplication.network.models
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class CryptoModel(
     @SerializedName("Id")
     val id: String,
@@ -23,4 +27,4 @@ data class CryptoModel(
     val blockReward: Double,
     @SerializedName("BlockTime")
     val blockTime: Double
-)
+): Parcelable

@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import app.naum.myapplication.R
@@ -29,10 +31,6 @@ class AllCoinsFragment : Fragment(), AllCoinsItemSelected {
     private var _binding: FragmentAllCoinsBinding? = null
     private val binding get() = _binding!!
     private val viewModel: AllCoinsViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,7 +77,6 @@ class AllCoinsFragment : Fragment(), AllCoinsItemSelected {
     }
 
     private fun showSuccessScreen(list: List<CryptoModel>) {
-        Log.d(TAG, "showSuccessScreen: model = $list")
         setupRecyclerView(list)
         (activity as MainActivity).hideLoadingIndicator()
     }
@@ -101,6 +98,9 @@ class AllCoinsFragment : Fragment(), AllCoinsItemSelected {
 
     override fun onAllCoinsItemSelected(model: CryptoModel) {
         Log.d(TAG, "onAllCoinsItemSelected: selectedModel = $model")
+        val action = AllCoinsFragmentDirections.actionBlankFragmentToCoinOverviewFragment(model)
+//        binding.root.findNavController().navigate(action)
+        findNavController().navigate(action)
     }
 
     companion object {
