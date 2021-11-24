@@ -36,9 +36,7 @@ class CoinOverviewFragment : Fragment() {
 //        Log.d(TAG, "onCreateView: mode = ${args.cryptoModel}")
         _binding = FragmentCoinOverviewBinding.inflate(inflater, container, false)
 
-        setupUI()
-        Log.d(TAG, "onCreateView: symbol = ${args.symbol}")
-        viewModel.getCoinOverview(args.symbol)
+        setupUI(args.coin)
         return binding.root
     }
 
@@ -47,8 +45,9 @@ class CoinOverviewFragment : Fragment() {
         _binding = null
     }
 
-    private fun setupUI() {
+    private fun setupUI(model: CryptoModel) {
         setupTabLayout()
+        showCoinOverview(model)
         subscribeToObservables()
     }
 
@@ -65,13 +64,13 @@ class CoinOverviewFragment : Fragment() {
     }
 
     private fun subscribeToObservables() {
-        viewModel.coinState.observe(viewLifecycleOwner, {
-            when(it) {
-                is DataState.Loading -> (activity as MainActivity).showLoadingIndicator()
-                is DataState.Error -> showErrorState(it.exception)
-                is DataState.Success -> showCoinOverview(it.data)
-            }
-        })
+//        viewModel.coinState.observe(viewLifecycleOwner, {
+//            when(it) {
+//                is DataState.Loading -> (activity as MainActivity).showLoadingIndicator()
+//                is DataState.Error -> showErrorState(it.exception)
+//                is DataState.Success -> showCoinOverview(it.data)
+//            }
+//        })
     }
 
     private fun showErrorState(e: Exception) {
@@ -86,7 +85,7 @@ class CoinOverviewFragment : Fragment() {
     }
 
     private fun showCoinOverview(model: CryptoModel) {
-        (activity as MainActivity).hideLoadingIndicator()
+//        (activity as MainActivity).hideLoadingIndicator()
         Log.d(TAG, "showCoinOverview: model = $model")
     }
 

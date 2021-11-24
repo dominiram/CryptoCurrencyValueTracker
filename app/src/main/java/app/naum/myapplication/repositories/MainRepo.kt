@@ -30,19 +30,6 @@ class MainRepo constructor(
         }
     }
 
-    suspend fun getCoinOverview(symbol: String): Flow<DataState<CryptoModel>> = flow {
-        emit(DataState.Loading)
-        try {
-            val coin = apiService.getCoinOverviewBySymbol(symbol)
-            Log.d(TAG, "getCoinOverview: coin = $coin")
-
-            if(coin.data[symbol] != null) emit(DataState.Success(coin.data[symbol]!!))
-            else emit(DataState.Error(Exception("Something went wrong, please try again later!")))
-        } catch (e: Exception) {
-            emit(DataState.Error(e))
-        }
-    }
-
     companion object {
         val TAG = "MainRepo"
     }

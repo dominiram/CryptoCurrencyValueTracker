@@ -90,8 +90,8 @@ class AllCoinsFragment : Fragment(), AllCoinsItemSelected {
         binding.allCoinsRv.adapter = adapter
     }
 
-    override fun onAllCoinsItemSelected(symbol: String) {
-        val action = AllCoinsFragmentDirections.actionBlankFragmentToCoinOverviewFragment(symbol)
+    override fun onAllCoinsItemSelected(model: CryptoModel) {
+        val action = AllCoinsFragmentDirections.actionBlankFragmentToCoinOverviewFragment(model)
         findNavController().navigate(action)
     }
 

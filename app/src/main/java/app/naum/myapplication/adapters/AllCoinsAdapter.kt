@@ -41,7 +41,7 @@ class AllCoinsAdapter(
         init { itemView.setOnClickListener(this) }
 
         override fun onClick(p0: View?) =
-            coinsSelectedInterface.onAllCoinsItemSelected(allCoinsList[adapterPosition].symbol)
+            coinsSelectedInterface.onAllCoinsItemSelected(allCoinsList[adapterPosition])
     }
 
     companion object {

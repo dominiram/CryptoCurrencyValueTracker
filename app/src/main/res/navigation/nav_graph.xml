@@ -20,7 +20,7 @@
         android:label="fragment_coin_overview"
         tools:layout="@layout/fragment_coin_overview" >
         <argument
-            android:name="symbol"
-            app:argType="string" />
+            android:name="coin"
+            app:argType="app.naum.myapplication.network.models.CryptoModel" />
     </fragment>
 </navigation>

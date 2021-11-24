@@ -16,15 +16,5 @@ import javax.inject.Inject
 class CoinOverviewViewModel @Inject constructor(
     private val repo: MainRepo
 ): ViewModel(){
-    private val mutableCoinState: MutableLiveData<DataState<CryptoModel>> = MutableLiveData()
-    val coinState: LiveData<DataState<CryptoModel>>
-        get() = mutableCoinState
 
-    fun getCoinOverview(symbol: String) {
-        viewModelScope.launch {
-            repo.getCoinOverview(symbol).collect {
-                mutableCoinState.value = it
-            }
-        }
-    }
 }
