@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/blankFragment">
+
+    <fragment
+        android:id="@+id/blankFragment"
+        android:name="app.naum.myapplication.views.AllCoinsFragment"
+        android:label="fragment_blank"
+        tools:layout="@layout/fragment_all_coins" >
+        <action
+            android:id="@+id/action_blankFragment_to_coinOverviewFragment"
+            app:destination="@id/coinOverviewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/coinOverviewFragment"
+        android:name="app.naum.myapplication.CoinOverviewFragment"
+        android:label="fragment_coin_overview"
+        tools:layout="@layout/fragment_coin_overview" />
+</navigation>
