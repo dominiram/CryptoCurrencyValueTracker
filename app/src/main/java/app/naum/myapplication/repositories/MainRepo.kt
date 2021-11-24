@@ -35,7 +35,7 @@ class MainRepo constructor(
         try {
             val coin = apiService.getCoinOverviewBySymbol(symbol)
             Log.d(TAG, "getCoinOverview: coin = $coin")
-g
+
             if(coin.data[symbol] != null) emit(DataState.Success(coin.data[symbol]!!))
             else emit(DataState.Error(Exception("Something went wrong, please try again later!")))
         } catch (e: Exception) {
