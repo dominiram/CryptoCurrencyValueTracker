@@ -23,7 +23,7 @@ import java.lang.Exception
 @AndroidEntryPoint
 class CoinOverviewFragment : Fragment() {
 
-//    private val args: CoinOverviewFragmentArgs by navArgs()
+    private val args: CoinOverviewFragmentArgs by navArgs()
     private var _binding: FragmentCoinOverviewBinding? = null
     private val binding get() = _binding!!
     private val viewModel: CoinOverviewViewModel by viewModels()
@@ -37,6 +37,8 @@ class CoinOverviewFragment : Fragment() {
         _binding = FragmentCoinOverviewBinding.inflate(inflater, container, false)
 
         setupUI()
+        Log.d(TAG, "onCreateView: symbol = ${args.symbol}")
+        viewModel.getCoinOverview(args.symbol)
         return binding.root
     }
 
@@ -65,7 +67,7 @@ class CoinOverviewFragment : Fragment() {
     private fun subscribeToObservables() {
         viewModel.coinState.observe(viewLifecycleOwner, {
             when(it) {
-                is DataState.Loading -> Log.d(TAG, "subscribeToObservables: loading...")
+                is DataState.Loading -> (activity as MainActivity).showLoadingIndicator()
                 is DataState.Error -> showErrorState(it.exception)
                 is DataState.Success -> showCoinOverview(it.data)
             }
@@ -73,6 +75,7 @@ class CoinOverviewFragment : Fragment() {
     }
 
     private fun showErrorState(e: Exception) {
+        e.printStackTrace()
         (activity as MainActivity).hideLoadingIndicator()
         Toast.makeText(
             requireContext(),
@@ -83,6 +86,7 @@ class CoinOverviewFragment : Fragment() {
     }
 
     private fun showCoinOverview(model: CryptoModel) {
+        (activity as MainActivity).hideLoadingIndicator()
         Log.d(TAG, "showCoinOverview: model = $model")
     }
 

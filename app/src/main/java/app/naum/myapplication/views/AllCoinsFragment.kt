@@ -25,7 +25,6 @@ class AllCoinsFragment : Fragment(), AllCoinsItemSelected {
     private var _binding: FragmentAllCoinsBinding? = null
     private val binding get() = _binding!!
     private val viewModel: AllCoinsViewModel by viewModels()
-    private val coinOverviewViewModel: CoinOverviewViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -92,9 +91,7 @@ class AllCoinsFragment : Fragment(), AllCoinsItemSelected {
     }
 
     override fun onAllCoinsItemSelected(symbol: String) {
-        showLoadingIndicator()
-        coinOverviewViewModel.getCoinOverview(symbol)
-        val action = AllCoinsFragmentDirections.actionBlankFragmentToCoinOverviewFragment()
+        val action = AllCoinsFragmentDirections.actionBlankFragmentToCoinOverviewFragment(symbol)
         findNavController().navigate(action)
     }
 
