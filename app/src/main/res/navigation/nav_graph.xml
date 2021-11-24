@@ -18,9 +18,5 @@
         android:id="@+id/coinOverviewFragment"
         android:name="app.naum.myapplication.CoinOverviewFragment"
         android:label="fragment_coin_overview"
-        tools:layout="@layout/fragment_coin_overview" >
-        <argument
-            android:name="cryptoModel"
-            app:argType="app.naum.myapplication.network.models.CryptoModel" />
-    </fragment>
+        tools:layout="@layout/fragment_coin_overview" />
 </navigation>

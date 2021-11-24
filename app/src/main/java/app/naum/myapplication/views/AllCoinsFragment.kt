@@ -1,29 +1,23 @@
 package app.naum.myapplication.views
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import app.naum.myapplication.R
 import app.naum.myapplication.adapters.AllCoinsAdapter
 import app.naum.myapplication.adapters.AllCoinsItemSelected
 import app.naum.myapplication.databinding.FragmentAllCoinsBinding
-import app.naum.myapplication.network.models.AllCoinsResponse
 import app.naum.myapplication.network.models.CryptoModel
 import app.naum.myapplication.utils.DataState
 import app.naum.myapplication.viewmodels.AllCoinsViewModel
+import app.naum.myapplication.viewmodels.CoinOverviewViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import org.json.JSONArray
-import org.json.JSONObject
 import java.lang.Exception
-import kotlin.math.log
 
 @AndroidEntryPoint
 class AllCoinsFragment : Fragment(), AllCoinsItemSelected {
@@ -31,6 +25,7 @@ class AllCoinsFragment : Fragment(), AllCoinsItemSelected {
     private var _binding: FragmentAllCoinsBinding? = null
     private val binding get() = _binding!!
     private val viewModel: AllCoinsViewModel by viewModels()
+    private val coinOverviewViewModel: CoinOverviewViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,7 +48,7 @@ class AllCoinsFragment : Fragment(), AllCoinsItemSelected {
     //Helper methods
 
     private fun subscribeToObservables() {
-        viewModel.weatherState.observe(viewLifecycleOwner, {
+        viewModel.cryptoListState.observe(viewLifecycleOwner, {
             when (it) {
                 is DataState.Loading -> showLoadingIndicator()
                 is DataState.Error -> showErrorState(it.exception)
@@ -96,10 +91,10 @@ class AllCoinsFragment : Fragment(), AllCoinsItemSelected {
         binding.allCoinsRv.adapter = adapter
     }
 
-    override fun onAllCoinsItemSelected(model: CryptoModel) {
-        Log.d(TAG, "onAllCoinsItemSelected: selectedModel = $model")
-        val action = AllCoinsFragmentDirections.actionBlankFragmentToCoinOverviewFragment(model)
-//        binding.root.findNavController().navigate(action)
+    override fun onAllCoinsItemSelected(symbol: String) {
+        showLoadingIndicator()
+        coinOverviewViewModel.getCoinOverview(symbol)
+        val action = AllCoinsFragmentDirections.actionBlankFragmentToCoinOverviewFragment()
         findNavController().navigate(action)
     }
 

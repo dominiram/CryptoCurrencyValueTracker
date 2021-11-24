@@ -13,17 +13,17 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AllCoinsViewModel @Inject constructor(
+class CoinOverviewViewModel @Inject constructor(
     private val repo: MainRepo
-): ViewModel() {
-    private val mutableCryptoModelListState: MutableLiveData<DataState<List<CryptoModel>>> = MutableLiveData()
-    val cryptoListState: LiveData<DataState<List<CryptoModel>>>
-        get() = mutableCryptoModelListState
+): ViewModel(){
+    private val mutableCoinState: MutableLiveData<DataState<CryptoModel>> = MutableLiveData()
+    val coinState: LiveData<DataState<CryptoModel>>
+        get() = mutableCoinState
 
-    fun getAllCoinsList() {
+    fun getCoinOverview(symbol: String) {
         viewModelScope.launch {
-            repo.getAllCoinsList().collect {
-                mutableCryptoModelListState.value = it
+            repo.getCoinOverview(symbol).collect {
+                mutableCoinState.value = it
             }
         }
     }

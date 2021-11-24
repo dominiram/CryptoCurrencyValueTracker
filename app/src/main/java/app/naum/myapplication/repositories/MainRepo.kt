@@ -30,6 +30,16 @@ class MainRepo constructor(
         }
     }
 
+    suspend fun getCoinOverview(symbol: String): Flow<DataState<CryptoModel>> = flow {
+        emit(DataState.Loading)
+        try {
+            val coin = apiService.getCoinOverviewBySymbol(symbol)
+            emit(DataState.Success(coin))
+        } catch (e: Exception) {
+            emit(DataState.Error(e))
+        }
+    }
+
     companion object {
         val TAG = "MainRepo"
     }
