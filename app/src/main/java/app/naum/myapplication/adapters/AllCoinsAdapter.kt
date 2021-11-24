@@ -1,17 +1,18 @@
 package app.naum.myapplication.adapters
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import app.naum.myapplication.databinding.FragmentAllCoinsBinding
 import app.naum.myapplication.databinding.ListItemAllCoinsBinding
 import app.naum.myapplication.network.models.CryptoModel
 import com.bumptech.glide.Glide
 
 class AllCoinsAdapter(
     private val allCoinsList: List<CryptoModel>,
+    private val coinsSelectedInterface: AllCoinsItemSelected,
     private val context: Context
 ): RecyclerView.Adapter<AllCoinsAdapter.ViewHolder>() {
     private lateinit var binding: ListItemAllCoinsBinding
@@ -30,20 +31,18 @@ class AllCoinsAdapter(
             .into(binding.listItemIv)
     }
 
-    override fun getItemCount(): Int {
-        return allCoinsList.size
+    override fun getItemCount() = allCoinsList.size
+
+    override fun getItemId(position: Int) = position.toLong()
+
+    override fun getItemViewType(position: Int) = position
+
+    inner class ViewHolder(view: View): RecyclerView.ViewHolder(view), View.OnClickListener {
+        init { itemView.setOnClickListener(this) }
+
+        override fun onClick(p0: View?) =
+            coinsSelectedInterface.onAllCoinsItemSelected(allCoinsList[adapterPosition])
     }
-
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return position
-    }
-
-
-    inner class ViewHolder(view: View): RecyclerView.ViewHolder(view)
 
     companion object {
         val imageBaseUrl = "https://www.cryptocompare.com"

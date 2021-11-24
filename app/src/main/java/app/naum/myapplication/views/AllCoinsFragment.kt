@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import app.naum.myapplication.R
 import app.naum.myapplication.adapters.AllCoinsAdapter
+import app.naum.myapplication.adapters.AllCoinsItemSelected
 import app.naum.myapplication.databinding.FragmentAllCoinsBinding
 import app.naum.myapplication.network.models.AllCoinsResponse
 import app.naum.myapplication.network.models.CryptoModel
@@ -23,7 +24,7 @@ import java.lang.Exception
 import kotlin.math.log
 
 @AndroidEntryPoint
-class AllCoinsFragment : Fragment() {
+class AllCoinsFragment : Fragment(), AllCoinsItemSelected {
 
     private var _binding: FragmentAllCoinsBinding? = null
     private val binding get() = _binding!!
@@ -91,10 +92,15 @@ class AllCoinsFragment : Fragment() {
         )
         val adapter = AllCoinsAdapter(
             list,
+            this,
             requireContext()
         )
         adapter.setHasStableIds(true)
         binding.allCoinsRv.adapter = adapter
+    }
+
+    override fun onAllCoinsItemSelected(model: CryptoModel) {
+        Log.d(TAG, "onAllCoinsItemSelected: selectedModel = $model")
     }
 
     companion object {
