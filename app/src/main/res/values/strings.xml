@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Crypto currency</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="name_label">"Name: "</string>
+    <string name="description_label">"Description: "</string>
+    <string name="website_label">"Website: "</string>
+    <string name="total_mined_label">"Total mined: "</string>
+    <string name="block_time_label">"Block time: "</string>
+    <string name="block_reward_label">"Block reward: "</string>
 </resources>
