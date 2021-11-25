@@ -46,15 +46,15 @@ class CoinOverviewFragment : Fragment() {
     }
 
     private fun setupUI(model: CryptoModel) {
-        setupTabLayout()
+        setupTabLayout(model)
         showCoinOverview(model)
         subscribeToObservables()
     }
 
-    private fun setupTabLayout() {
+    private fun setupTabLayout(model: CryptoModel) {
         val tabLayout = binding.tabLayout
         val viewPager = binding.coinOverviewViewPager
-        viewPager.adapter = CoinOverviewViewPagerAdapter(this)
+        viewPager.adapter = CoinOverviewViewPagerAdapter(this, model)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             when(position) {
                 0 -> tab.text = "General info"

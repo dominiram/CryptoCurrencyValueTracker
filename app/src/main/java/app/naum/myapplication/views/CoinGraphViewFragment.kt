@@ -6,8 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import app.naum.myapplication.R
+import app.naum.myapplication.network.models.CryptoModel
 
-class CoinGraphViewFragment : Fragment() {
+class CoinGraphViewFragment(
+    private val model: CryptoModel
+) : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

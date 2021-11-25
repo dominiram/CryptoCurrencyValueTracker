@@ -15,6 +15,8 @@ data class CryptoModel(
     val symbol: String,
     @SerializedName("FullName")
     val name: String,
+    @SerializedName("Description")
+    val description: String,
     @SerializedName("SortOrder")
     val sortOrder: String,
     @SerializedName("IsTrading")
