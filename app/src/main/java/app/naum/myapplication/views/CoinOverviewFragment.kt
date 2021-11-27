@@ -1,4 +1,4 @@
-package app.naum.myapplication
+package app.naum.myapplication.views
 
 import android.os.Bundle
 import android.util.Log
@@ -10,12 +10,9 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import app.naum.myapplication.adapters.CoinOverviewViewPagerAdapter
-import app.naum.myapplication.databinding.FragmentAllCoinsBinding
 import app.naum.myapplication.databinding.FragmentCoinOverviewBinding
 import app.naum.myapplication.network.models.CryptoModel
-import app.naum.myapplication.utils.DataState
 import app.naum.myapplication.viewmodels.CoinOverviewViewModel
-import app.naum.myapplication.views.MainActivity
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/recycler_view_blue"
-    tools:context=".CoinOverviewFragment">
+    tools:context=".views.CoinOverviewFragment">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
