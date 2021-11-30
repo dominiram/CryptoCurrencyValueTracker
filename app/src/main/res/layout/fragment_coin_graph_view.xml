@@ -1,14 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".views.CoinGraphViewFragment">
 
-    <app.naum.myapplication.views.GraphViewCanvas
-        android:id="@+id/graphViewCanvas"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/graphViewContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
 
-</FrameLayout>
+        <app.naum.myapplication.views.GraphViewCanvas
+            android:id="@+id/graphViewCanvas"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/y_coordinate_container"
+            app:layout_constraintStart_toEndOf="@+id/y_coordinate_container"
+            app:layout_constraintTop_toTopOf="@+id/y_coordinate_container" />
+
+        <LinearLayout
+            android:id="@+id/y_coordinate_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/graphHighestValue"
+                style="@style/y_coordinate_text_view"
+                android:layout_marginBottom="24dp"
+                tools:text="6500" />
+
+            <TextView
+                android:id="@+id/graphMidValue"
+                style="@style/y_coordinate_text_view"
+                tools:text="6500" />
+
+            <TextView
+                android:id="@+id/graphLowesttValue"
+                style="@style/y_coordinate_text_view"
+                android:layout_marginTop="24dp"
+                tools:text="6500" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/graphViewContainer">
+
+        <TextView
+            android:id="@+id/graphFirstTime"
+            style="@style/y_coordinate_text_view"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="6500" />
+
+        <TextView
+            android:id="@+id/graphMidTime"
+            style="@style/y_coordinate_text_view"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/graphLastTime"
+            app:layout_constraintStart_toEndOf="@+id/graphFirstTime"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="6500" />
+
+        <TextView
+            android:id="@+id/graphLastTime"
+            style="@style/y_coordinate_text_view"
+            android:layout_gravity="end"
+            android:gravity="end"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="6500" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

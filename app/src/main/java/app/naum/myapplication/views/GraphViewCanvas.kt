@@ -2,10 +2,14 @@ package app.naum.myapplication.views
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
+import app.naum.myapplication.R
+import app.naum.myapplication.models.GraphCoordinatesModel
 import java.lang.Exception
 
 class GraphViewCanvas @JvmOverloads constructor(
@@ -16,25 +20,74 @@ class GraphViewCanvas @JvmOverloads constructor(
 
     private var lines: Path = Path()
     private var graphLine: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private var graphCoordinatesModel: GraphCoordinatesModel? = null
 
     init {
         graphLine.apply {
             style = Paint.Style.STROKE
             setARGB(255, 0, 255, 0)
-            strokeWidth = 5F
+            strokeWidth = 7F
             isAntiAlias = true
         }
-        lines.moveTo(0F, 0F)
+    }
+
+    fun setGraphCoordinatesModel(graphCoordinatesModel: GraphCoordinatesModel) {
+        this.graphCoordinatesModel = graphCoordinatesModel
+        invalidate()
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        lines.lineTo(200F, 50F)
-        lines.lineTo(300F, 150F)
-        lines.lineTo(400F, 250F)
-        lines.lineTo(500F, 300F)
+        lines.reset()
 
+        if(graphCoordinatesModel == null) {
+            lines.moveTo(0F, 0F)
+            lines.lineTo(200F, 50F)
+            lines.lineTo(300F, 150F)
+            lines.lineTo(400F, 250F)
+            lines.lineTo(500F, 300F)
+        }
+        else {
+            canvas?.drawColor(Color.WHITE)
+
+            val model = graphCoordinatesModel!!
+            val maxXValue = model.xCoordinates[model.xCoordinates.size-1]
+            val size = model.xCoordinates.size
+            val maxShownValueOnCanvas = model.yMax +
+                    (model.yMax + model.yMin) / 2
+            lines.moveTo(
+                getWidthOnCanvas(0, size),
+                transformValueY(
+                    model.yCoordinates[0],
+                    maxShownValueOnCanvas
+                )
+            )
+            Log.d(TAG, "onDraw: x = ${getWidthOnCanvas(0, size)}")
+            Log.d(TAG, "onDraw: y = ${transformValueY(model.yCoordinates[0], maxShownValueOnCanvas)}")
+            for(i in 1 until model.xCoordinates.size) {
+                Log.d(TAG, "onDraw: model.xCoordinates[i] = ${model.xCoordinates[i]}")
+                Log.d(TAG, "onDraw: maxXValue = $maxXValue")
+                Log.d(TAG, "onDraw: x = ${getWidthOnCanvas(i, size)}")
+                Log.d(TAG, "onDraw: y = ${transformValueY(model.yCoordinates[i], maxShownValueOnCanvas)}")
+                lines.lineTo(
+                    getWidthOnCanvas(i, size),
+                    transformValueY(model.yCoordinates[i], maxShownValueOnCanvas)
+                )
+            }
+        }
+
+        graphLine.color = resources.getColor(R.color.cool_gray)
         canvas?.drawPath(lines, graphLine)
+        Log.d(CoinGraphViewFragment.TAG, "setupUI: canvas.width = $width")
+        Log.d(CoinGraphViewFragment.TAG, "setupUI: canvas.height = $height")
+    }
+
+    private fun getWidthOnCanvas(i: Int, size: Int): Float = (width.toFloat()/size.toFloat())*i
+//    private fun transformTimestampToX(ts: Int, maxTs: Int): Float = (width*(ts.toFloat()/maxTs.toFloat()))
+    private fun transformValueY(value: Double, maxVal: Double): Float = (height - height*(value/maxVal).toFloat())
+
+    companion object {
+        val TAG = "GraphViewCanvas"
     }
 }

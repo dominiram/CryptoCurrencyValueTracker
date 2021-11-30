@@ -12,7 +12,7 @@ import androidx.navigation.fragment.navArgs
 import app.naum.myapplication.adapters.CoinOverviewViewPagerAdapter
 import app.naum.myapplication.databinding.FragmentCoinOverviewBinding
 import app.naum.myapplication.network.models.CryptoModel
-import app.naum.myapplication.viewmodels.CoinOverviewViewModel
+import app.naum.myapplication.viewmodels.CoinViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
@@ -23,7 +23,7 @@ class CoinOverviewFragment : Fragment() {
     private val args: CoinOverviewFragmentArgs by navArgs()
     private var _binding: FragmentCoinOverviewBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: CoinOverviewViewModel by viewModels()
+    private val viewModel: CoinViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +46,8 @@ class CoinOverviewFragment : Fragment() {
         setupTabLayout(model)
         showCoinOverview(model)
         subscribeToObservables()
+        (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        (activity as MainActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
     private fun setupTabLayout(model: CryptoModel) {

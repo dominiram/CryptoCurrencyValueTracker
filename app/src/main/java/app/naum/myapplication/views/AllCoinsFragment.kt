@@ -15,7 +15,6 @@ import app.naum.myapplication.databinding.FragmentAllCoinsBinding
 import app.naum.myapplication.network.models.CryptoModel
 import app.naum.myapplication.utils.DataState
 import app.naum.myapplication.viewmodels.AllCoinsViewModel
-import app.naum.myapplication.viewmodels.CoinOverviewViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
 
@@ -58,6 +57,8 @@ class AllCoinsFragment : Fragment(), AllCoinsItemSelected {
 
     private fun setupUI() {
         subscribeToObservables()
+        (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        (activity as MainActivity).supportActionBar?.setDisplayShowHomeEnabled(false)
     }
 
     private fun showLoadingIndicator() {
