@@ -28,9 +28,25 @@ class CoinViewModel @Inject constructor(
 //    val historicalDataListState: LiveData<DataState<List<HistoricalCryptoData>>>
 //        get() = mutableHistoricalDataListState
 
-    fun getHistoricalDataForDayBySymbol(fromSymbol: String, numberOfDays: Int) {
+    fun getHistoricalDataForDay(fromSymbol: String, numberOfDays: Int) {
         viewModelScope.launch {
             repo.getHistoricalDataForDay(fromSymbol, numberOfDays).collect {
+                mutableHistoricalDataListState.value = it
+            }
+        }
+    }
+
+    fun getHistoricalDataForHour(fromSymbol: String, numberOfDays: Int) {
+        viewModelScope.launch {
+            repo.getHistoricalDataForHour(fromSymbol, numberOfDays).collect {
+                mutableHistoricalDataListState.value = it
+            }
+        }
+    }
+
+    fun getHistoricalDataForMinute(fromSymbol: String, numberOfDays: Int) {
+        viewModelScope.launch {
+            repo.getHistoricalDataForMinute(fromSymbol, numberOfDays).collect {
                 mutableHistoricalDataListState.value = it
             }
         }

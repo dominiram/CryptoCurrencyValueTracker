@@ -7,4 +7,7 @@
     <string name="total_mined_label">"Total mined: "</string>
     <string name="block_time_label">"Block time: "</string>
     <string name="block_reward_label">"Block reward: "</string>
+    <string name="compare_by_day">by Day</string>
+    <string name="by_hour">by Hour</string>
+    <string name="by_minute">by Minute</string>
 </resources>

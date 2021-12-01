@@ -52,10 +52,8 @@ class GraphViewCanvas @JvmOverloads constructor(
             canvas?.drawColor(Color.WHITE)
 
             val model = graphCoordinatesModel!!
-            val maxXValue = model.xCoordinates[model.xCoordinates.size-1]
             val size = model.xCoordinates.size
-            val maxShownValueOnCanvas = model.yMax +
-                    (model.yMax + model.yMin) / 2
+            val maxShownValueOnCanvas = model.yMax + (model.yMax + model.yMin) / 2
             lines.moveTo(
                 getWidthOnCanvas(0, size),
                 transformValueY(
@@ -63,13 +61,7 @@ class GraphViewCanvas @JvmOverloads constructor(
                     maxShownValueOnCanvas
                 )
             )
-            Log.d(TAG, "onDraw: x = ${getWidthOnCanvas(0, size)}")
-            Log.d(TAG, "onDraw: y = ${transformValueY(model.yCoordinates[0], maxShownValueOnCanvas)}")
             for(i in 1 until model.xCoordinates.size) {
-                Log.d(TAG, "onDraw: model.xCoordinates[i] = ${model.xCoordinates[i]}")
-                Log.d(TAG, "onDraw: maxXValue = $maxXValue")
-                Log.d(TAG, "onDraw: x = ${getWidthOnCanvas(i, size)}")
-                Log.d(TAG, "onDraw: y = ${transformValueY(model.yCoordinates[i], maxShownValueOnCanvas)}")
                 lines.lineTo(
                     getWidthOnCanvas(i, size),
                     transformValueY(model.yCoordinates[i], maxShownValueOnCanvas)

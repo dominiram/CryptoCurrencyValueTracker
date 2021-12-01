@@ -1,7 +1,6 @@
 package app.naum.myapplication.views
 
 import android.annotation.SuppressLint
-import android.graphics.Point
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,14 +11,12 @@ import androidx.fragment.app.viewModels
 import app.naum.myapplication.databinding.FragmentCoinGraphViewBinding
 import app.naum.myapplication.models.GraphCoordinatesModel
 import app.naum.myapplication.network.models.CryptoModel
-import app.naum.myapplication.network.models.HistoricalCryptoData
 import app.naum.myapplication.utils.DataState
 import app.naum.myapplication.viewmodels.CoinViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.coroutines.coroutineContext
 
 @AndroidEntryPoint
 class CoinGraphViewFragment(
@@ -30,6 +27,9 @@ class CoinGraphViewFragment(
     private val binding get() = _binding!!
     private lateinit var canvas: GraphViewCanvas
     private val viewModel: CoinViewModel by viewModels()
+    private var comparisonByDaySelected = true
+    private var comparisonByHourSelected = false
+    private var comparisonByMinuteSelected = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,13 +42,60 @@ class CoinGraphViewFragment(
         )
 
         setupUI()
-        viewModel.getHistoricalDataForDayBySymbol(model.symbol, 7)
+        viewModel.getHistoricalDataForDay(model.symbol, 7)
         return binding.root
     }
 
     private fun setupUI() {
         canvas = binding.graphViewCanvas
         subscribeToObservables()
+        setupButtonLabelsForDay()
+        setupListeners()
+    }
+
+    private fun setupListeners() {
+        binding.compareToDaysBtn.setOnClickListener {
+            setupButtonLabelsForDay()
+            viewModel.getHistoricalDataForDay(model.symbol, getMinimumLimit())
+        }
+        binding.compareToHoursBtn.setOnClickListener {
+            setupButtonLabelsForHour()
+            viewModel.getHistoricalDataForHour(model.symbol, getMinimumLimit())
+        }
+        binding.compareToMinutesBtn.setOnClickListener {
+            setupButtonLabelsForMinute()
+            viewModel.getHistoricalDataForMinute(model.symbol, getMinimumLimit())
+        }
+        binding.graphMinTimeCompare.setOnClickListener {
+            when{
+                comparisonByDaySelected -> viewModel
+                    .getHistoricalDataForDay(model.symbol, getMinimumLimit())
+                comparisonByHourSelected -> viewModel
+                    .getHistoricalDataForHour(model.symbol, getMinimumLimit())
+                comparisonByMinuteSelected -> viewModel
+                    .getHistoricalDataForMinute(model.symbol, getMinimumLimit())
+            }
+        }
+        binding.graphMidTimeCompare.setOnClickListener {
+            when{
+                comparisonByDaySelected -> viewModel
+                    .getHistoricalDataForDay(model.symbol, getMediumLimit())
+                comparisonByHourSelected -> viewModel
+                    .getHistoricalDataForHour(model.symbol, getMediumLimit())
+                comparisonByMinuteSelected -> viewModel
+                    .getHistoricalDataForMinute(model.symbol, getMediumLimit())
+            }
+        }
+        binding.graphMaxTimeCompare.setOnClickListener {
+            when{
+                comparisonByDaySelected -> viewModel
+                    .getHistoricalDataForDay(model.symbol, getMaximumLimit())
+                comparisonByHourSelected -> viewModel
+                    .getHistoricalDataForHour(model.symbol, getMaximumLimit())
+                comparisonByMinuteSelected -> viewModel
+                    .getHistoricalDataForMinute(model.symbol, getMaximumLimit())
+            }
+        }
     }
 
     private fun subscribeToObservables() {
@@ -78,6 +125,7 @@ class CoinGraphViewFragment(
         binding.graphHighestValue.text = coordinatesModel.yMax.toString()
         binding.graphLowesttValue.text = coordinatesModel.yMin.toString()
         binding.graphMidValue.text = coordinatesModel.yCoordinates[coordinatesModel.yCoordinates.size/2].toString()
+
         binding.graphFirstTime.text = convertTimestampToDate(coordinatesModel.xCoordinates[0].toString())
         binding.graphMidTime.text = convertTimestampToDate(coordinatesModel.xCoordinates[
                 coordinatesModel.xCoordinates.size/2
@@ -92,6 +140,66 @@ class CoinGraphViewFragment(
         val sdf = SimpleDateFormat("MM/dd/yyyy")
         val date = Date(ts.toLong())
         return sdf.format(date)
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setupButtonLabelsForDay() {
+        binding.graphMinTimeCompare.text = "1W"
+        binding.graphMidTimeCompare.text = "2W"
+        binding.graphMaxTimeCompare.text = "1M"
+
+        comparisonByDaySelected = true
+        comparisonByHourSelected = false
+        comparisonByMinuteSelected = false
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setupButtonLabelsForHour() {
+        binding.graphMinTimeCompare.text = "1D"
+        binding.graphMidTimeCompare.text = "3D"
+        binding.graphMaxTimeCompare.text = "1W"
+
+        comparisonByDaySelected = false
+        comparisonByHourSelected = true
+        comparisonByMinuteSelected = false
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setupButtonLabelsForMinute() {
+        binding.graphMinTimeCompare.text = "1H"
+        binding.graphMidTimeCompare.text = "3H"
+        binding.graphMaxTimeCompare.text = "1D"
+
+        comparisonByDaySelected = false
+        comparisonByHourSelected = false
+        comparisonByMinuteSelected = true
+    }
+
+    private fun getMinimumLimit(): Int {
+        when {
+            comparisonByDaySelected -> return 7
+            comparisonByHourSelected -> return 24
+            comparisonByMinuteSelected -> return 60
+        }
+        return 1
+    }
+
+    private fun getMediumLimit(): Int {
+        when {
+            comparisonByDaySelected -> return 14
+            comparisonByHourSelected -> return 72
+            comparisonByMinuteSelected -> return 180
+        }
+        return 1
+    }
+
+    private fun getMaximumLimit(): Int {
+        when {
+            comparisonByDaySelected -> return 30
+            comparisonByHourSelected -> return 168
+            comparisonByMinuteSelected -> return 1440
+        }
+        return 1
     }
 
     companion object {

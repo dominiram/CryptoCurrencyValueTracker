@@ -41,6 +41,38 @@ class MainRepo constructor(
                     fromSymbol,
                     SYMBOL_TO_COMPARE,
                     numberOfDays
+                )
+            emit(DataState.Success(getGraphCoordinatesModel(historicalList.data.data)))
+        } catch (e: Exception) {
+            emit(DataState.Error(e))
+        }
+    }
+
+    suspend fun getHistoricalDataForHour(fromSymbol: String, numberOfDays: Int):
+            Flow<DataState<GraphCoordinatesModel>> = flow {
+        emit(DataState.Loading)
+        try {
+            val historicalList = apiService
+                .getHistoricalDataForHour(
+                    fromSymbol,
+                    SYMBOL_TO_COMPARE,
+                    numberOfDays
+                )
+            emit(DataState.Success(getGraphCoordinatesModel(historicalList.data.data)))
+        } catch (e: Exception) {
+            emit(DataState.Error(e))
+        }
+    }
+
+    suspend fun getHistoricalDataForMinute(fromSymbol: String, numberOfDays: Int):
+            Flow<DataState<GraphCoordinatesModel>> = flow {
+        emit(DataState.Loading)
+        try {
+            val historicalList = apiService
+                .getHistoricalDataForMinute(
+                    fromSymbol,
+                    SYMBOL_TO_COMPARE,
+                    numberOfDays
                 ) //.data.data.onEach {  }
             emit(DataState.Success(getGraphCoordinatesModel(historicalList.data.data)))
         } catch (e: Exception) {
