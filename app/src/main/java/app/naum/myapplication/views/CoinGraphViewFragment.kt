@@ -137,8 +137,13 @@ class CoinGraphViewFragment(
 
     @SuppressLint("SimpleDateFormat")
     private fun convertTimestampToDate(ts: String): String {
-        val sdf = SimpleDateFormat("MM/dd/yyyy")
-        val date = Date(ts.toLong())
+        Log.d(TAG, "convertTimestampToDate: ts = $ts")
+        val sdf = if(comparisonByDaySelected)
+            SimpleDateFormat("MM/dd/yyyy")
+        else SimpleDateFormat("HH:mm")
+        Log.d(TAG, "convertTimestampToDate: ts.toLong = ${ts.toLong()}")
+        val date = Date(ts.toLong()*1000)
+        Log.d(TAG, "convertTimestampToDate: date = $date")
         return sdf.format(date)
     }
 
