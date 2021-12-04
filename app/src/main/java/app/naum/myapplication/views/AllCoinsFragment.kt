@@ -59,6 +59,10 @@ class AllCoinsFragment : Fragment(), AllCoinsItemSelected {
 
     private fun setupUI() {
         subscribeToObservables()
+        binding.swipeRefreshContainer.setOnRefreshListener {
+            viewModel.getAllCoinsList()
+            binding.swipeRefreshContainer.isRefreshing = false
+        }
         (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         (activity as MainActivity).supportActionBar?.setDisplayShowHomeEnabled(false)
     }
