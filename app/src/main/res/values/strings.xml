@@ -10,4 +10,5 @@
     <string name="compare_by_day">by Day</string>
     <string name="by_hour">by Hour</string>
     <string name="by_minute">by Minute</string>
+    <string name="error_occured">An error has occured, probably due to no internet connection</string>
 </resources>

@@ -1,21 +1,21 @@
 package app.naum.myapplication.repositories
 
-import android.graphics.Point
 import android.util.Log
+import app.naum.myapplication.database.CryptoDatabase
 import app.naum.myapplication.models.GraphCoordinatesModel
 import app.naum.myapplication.network.models.CryptoModel
 import app.naum.myapplication.network.APIService
 import app.naum.myapplication.network.models.HistoricalCryptoData
 import app.naum.myapplication.utils.DataState
+import app.naum.myapplication.utils.NetworkToDatabaseCryptoModelMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.lang.Exception
-import kotlin.math.log
-import kotlin.math.max
-import kotlin.math.roundToInt
 
 class MainRepo constructor(
-    private val apiService: APIService
+    private val apiService: APIService,
+    private val database: CryptoDatabase,
+    private val mapper: NetworkToDatabaseCryptoModelMapper
 ) {
     suspend fun getAllCoinsList(): Flow<DataState<List<CryptoModel>>> = flow {
         emit(DataState.Loading)
@@ -24,11 +24,23 @@ class MainRepo constructor(
             val values: Collection<CryptoModel> = map.values
             val array: ArrayList<CryptoModel> = ArrayList(values)
             val sortedArray = array.sortedWith(compareBy({ it.sortOrder.length }, { it.sortOrder }))
+            sortedArray.forEach {
+                database.cryptoDao().insert(mapper.mapToDatabaseModel(it))
+            }
             Log.d(TAG, "getAllCoinsList: data.size = ${values.size}")
             emit(DataState.Success(sortedArray))
 
         } catch (e: Exception) {
-            emit(DataState.Error(e))
+            try {
+                val list = database.cryptoDao().getAllCryptoModels()
+                val cryptoModelList: MutableList<CryptoModel> = mutableListOf()
+                list.forEach {
+                    cryptoModelList.add(mapper.mapToNetworkAndApplicationModel(it))
+                }
+                emit(DataState.Success(cryptoModelList))
+            } catch (ee: Exception) {
+                emit(DataState.Error(ee))
+            }
         }
     }
 

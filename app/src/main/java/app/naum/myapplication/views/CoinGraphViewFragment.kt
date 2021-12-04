@@ -1,5 +1,6 @@
 package app.naum.myapplication.views
 
+import android.accounts.NetworkErrorException
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
@@ -7,7 +8,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
+import app.naum.myapplication.R
 import app.naum.myapplication.databinding.FragmentCoinGraphViewBinding
 import app.naum.myapplication.models.GraphCoordinatesModel
 import app.naum.myapplication.network.models.CryptoModel
@@ -109,9 +112,13 @@ class CoinGraphViewFragment(
     }
 
     private fun showErrorState(e: Exception) {
-        // TODO: 27/11/2021
         e.printStackTrace()
         (activity as MainActivity).hideLoadingIndicator()
+        Toast.makeText(
+            requireContext(),
+            resources.getString(R.string.error_occured),
+            Toast.LENGTH_LONG
+        ).show()
     }
 
     private fun showCoinGraphView(coordinatesModel: GraphCoordinatesModel) {

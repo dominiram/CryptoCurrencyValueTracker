@@ -5,10 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import app.naum.myapplication.R
 import app.naum.myapplication.adapters.AllCoinsAdapter
 import app.naum.myapplication.adapters.AllCoinsItemSelected
 import app.naum.myapplication.databinding.FragmentAllCoinsBinding
@@ -66,12 +68,20 @@ class AllCoinsFragment : Fragment(), AllCoinsItemSelected {
     }
 
     private fun showErrorState(e: Exception) {
-        (activity as MainActivity).hideLoadingIndicator()
         e.printStackTrace()
-        // TODO: 17/11/2021
+        (activity as MainActivity).hideLoadingIndicator()
+        Toast.makeText(
+            requireContext(),
+            resources.getString(R.string.error_occured),
+            Toast.LENGTH_LONG
+        ).show()
+
     }
 
     private fun showSuccessScreen(list: List<CryptoModel>) {
+        if(list.isNullOrEmpty()) {
+            showErrorState(Exception())
+        }
         setupRecyclerView(list)
         (activity as MainActivity).hideLoadingIndicator()
     }

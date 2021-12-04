@@ -41,16 +41,9 @@ class GraphViewCanvas @JvmOverloads constructor(
 
         lines.reset()
 
-        if(graphCoordinatesModel == null) {
-            lines.moveTo(0F, 0F)
-            lines.lineTo(200F, 50F)
-            lines.lineTo(300F, 150F)
-            lines.lineTo(400F, 250F)
-            lines.lineTo(500F, 300F)
-        }
-        else {
-            canvas?.drawColor(Color.WHITE)
+        canvas?.drawColor(Color.WHITE)
 
+        if(graphCoordinatesModel != null) {
             val model = graphCoordinatesModel!!
             val size = model.xCoordinates.size
             val maxShownValueOnCanvas = model.yMax + (model.yMax + model.yMin) / 2
@@ -61,7 +54,7 @@ class GraphViewCanvas @JvmOverloads constructor(
                     maxShownValueOnCanvas
                 )
             )
-            for(i in 1 until model.xCoordinates.size) {
+            for (i in 1 until model.xCoordinates.size) {
                 lines.lineTo(
                     getWidthOnCanvas(i, size),
                     transformValueY(model.yCoordinates[i], maxShownValueOnCanvas)
@@ -75,9 +68,11 @@ class GraphViewCanvas @JvmOverloads constructor(
         Log.d(CoinGraphViewFragment.TAG, "setupUI: canvas.height = $height")
     }
 
-    private fun getWidthOnCanvas(i: Int, size: Int): Float = (width.toFloat()/size.toFloat())*i
-//    private fun transformTimestampToX(ts: Int, maxTs: Int): Float = (width*(ts.toFloat()/maxTs.toFloat()))
-    private fun transformValueY(value: Double, maxVal: Double): Float = (height - height*(value/maxVal).toFloat())
+    private fun getWidthOnCanvas(i: Int, size: Int): Float = (width.toFloat() / size.toFloat()) * i
+
+    //    private fun transformTimestampToX(ts: Int, maxTs: Int): Float = (width*(ts.toFloat()/maxTs.toFloat()))
+    private fun transformValueY(value: Double, maxVal: Double): Float =
+        (height - height * (value / maxVal).toFloat())
 
     companion object {
         val TAG = "GraphViewCanvas"
