@@ -7,8 +7,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -25,7 +27,14 @@ object Retrofit {
     @Singleton
     @Provides
     fun provideRetrofitBuilder(gson: Gson): Retrofit.Builder {
+        val client = OkHttpClient()
+            .newBuilder()
+            .connectTimeout(3, TimeUnit.MINUTES)
+            .readTimeout(3, TimeUnit.MINUTES)
+            .writeTimeout(3, TimeUnit.MINUTES)
+            .build()
         return Retrofit.Builder()
+            .client(client)
             .baseUrl("https://min-api.cryptocompare.com/") //my data/ after com
             .addConverterFactory(GsonConverterFactory.create(gson))
     }

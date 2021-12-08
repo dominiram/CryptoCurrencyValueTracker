@@ -11,7 +11,7 @@ interface CryptoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(model: CryptoDatabaseModel): Long
 
-    @Query("select * from crypto_models order by sortOrder")
+    @Query("select * from crypto_models")
     suspend fun getAllCryptoModels(): List<CryptoDatabaseModel>
 
     @Query("select * from crypto_models where id = :id")

@@ -14,6 +14,7 @@ import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.lang.Exception
+import kotlin.math.log
 
 class MainRepo constructor(
     private val apiService: APIService,
@@ -30,7 +31,6 @@ class MainRepo constructor(
             sortedArray.forEach {
                 database.cryptoDao().insert(mapper.mapToDatabaseModel(it))
             }
-            Log.d(TAG, "getAllCoinsList: data.size = ${values.size}")
             emit(DataState.Success(sortedArray))
 
         } catch (e: Exception) {

@@ -10,14 +10,14 @@ class NetworkToDatabaseCryptoModelMapper
     fun mapToDatabaseModel(networkModel: CryptoModel): CryptoDatabaseModel {
         return CryptoDatabaseModel(
             networkModel.id,
-            networkModel.imageUrl,
+            networkModel.imageUrl?:"",
             networkModel.symbol,
             networkModel.name,
-            networkModel.description,
+            networkModel.description?:"",
             networkModel.sortOrder,
             networkModel.isTrading,
             networkModel.totalMined,
-            networkModel.coinWebsite,
+            networkModel.coinWebsite?:"",
             networkModel.blockReward,
             networkModel.blockTime
         )

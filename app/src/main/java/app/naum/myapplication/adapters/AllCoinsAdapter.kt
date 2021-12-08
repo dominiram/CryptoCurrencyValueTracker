@@ -26,9 +26,11 @@ class AllCoinsAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         binding.listItemCryptoName.text = allCoinsList[position].name
         binding.listItemCryptoSymbol.text = allCoinsList[position].symbol
-        Glide.with(context)
-            .load(imageBaseUrl+allCoinsList[position].imageUrl)
-            .into(binding.listItemIv)
+        allCoinsList[position].imageUrl?.let {
+            Glide.with(context)
+                .load(imageBaseUrl+it)
+                .into(binding.listItemIv)
+        }
     }
 
     override fun getItemCount() = allCoinsList.size

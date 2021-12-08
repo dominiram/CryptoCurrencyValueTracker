@@ -10,13 +10,13 @@ data class CryptoModel(
     @SerializedName("Id")
     val id: String,
     @SerializedName("ImageUrl")
-    val imageUrl: String,
+    val imageUrl: String?,
     @SerializedName("Symbol")
     val symbol: String,
     @SerializedName("FullName")
     val name: String,
     @SerializedName("Description")
-    val description: String,
+    val description: String?,
     @SerializedName("SortOrder")
     val sortOrder: String,
     @SerializedName("IsTrading")
@@ -24,7 +24,7 @@ data class CryptoModel(
     @SerializedName("TotalCoinsMined")
     val totalMined: Double,
     @SerializedName("AssetWebsiteUrl")
-    val coinWebsite: String,
+    val coinWebsite: String?,
     @SerializedName("BlockReward")
     val blockReward: Double,
     @SerializedName("BlockTime")
