@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/recycler_view_blue"
     tools:context=".views.CoinGeneralInfoFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/recycler_view_blue"
         android:orientation="vertical"
         android:paddingBottom="20dp">
 
@@ -127,6 +127,125 @@
 
             <TextView
                 android:id="@+id/coin_general_info_block_time"
+                style="@style/general_info_text_view" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="@string/compared_to_label_btc"
+                android:textStyle="bold"
+                style="@style/general_info_text_view"/>
+
+            <TextView
+                android:id="@+id/coin_compared_to_btc"
+                style="@style/general_info_text_view" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="@string/compared_to_label_eth"
+                android:textStyle="bold"
+                style="@style/general_info_text_view"/>
+
+            <TextView
+                android:id="@+id/coin_compared_to_eth"
+                style="@style/general_info_text_view" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="@string/compared_to_label_evn"
+                android:textStyle="bold"
+                style="@style/general_info_text_view"/>
+
+            <TextView
+                android:id="@+id/coin_compared_to_evn"
+                style="@style/general_info_text_view" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="@string/compared_to_label_doge"
+                android:textStyle="bold"
+                style="@style/general_info_text_view"/>
+
+            <TextView
+                android:id="@+id/coin_compared_to_doge"
+                style="@style/general_info_text_view" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="@string/compared_to_label_zec"
+                android:textStyle="bold"
+                style="@style/general_info_text_view"/>
+
+            <TextView
+                android:id="@+id/coin_compared_to_zec"
+                style="@style/general_info_text_view" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="@string/compared_to_label_usd"
+                android:textStyle="bold"
+                style="@style/general_info_text_view"/>
+
+            <TextView
+                android:id="@+id/coin_compared_to_usd"
+                style="@style/general_info_text_view" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="@string/compared_to_label_eur"
+                android:textStyle="bold"
+                style="@style/general_info_text_view"/>
+
+            <TextView
+                android:id="@+id/coin_compared_to_eur"
                 style="@style/general_info_text_view" />
         </LinearLayout>
     </LinearLayout>

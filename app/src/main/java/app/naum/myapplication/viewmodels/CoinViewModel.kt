@@ -5,8 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.naum.myapplication.models.GraphCoordinatesModel
-import app.naum.myapplication.network.models.CryptoModel
-import app.naum.myapplication.network.models.HistoricalCryptoData
+import app.naum.myapplication.network.models.CoinComparisonResponseWrapper
 import app.naum.myapplication.repositories.MainRepo
 import app.naum.myapplication.utils.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,10 +22,10 @@ class CoinViewModel @Inject constructor(
     val historicalDataListState: LiveData<DataState<GraphCoordinatesModel>>
         get() = mutableHistoricalDataListState
 
-//    private val mutableHistoricalDataListState:
-//            MutableLiveData<DataState<List<HistoricalCryptoData>>> = MutableLiveData()
-//    val historicalDataListState: LiveData<DataState<List<HistoricalCryptoData>>>
-//        get() = mutableHistoricalDataListState
+    private val mutableComparisonDataState: MutableLiveData<DataState<CoinComparisonResponseWrapper>>
+            = MutableLiveData()
+    val comparisonDataState: LiveData<DataState<CoinComparisonResponseWrapper>>
+        get() = mutableComparisonDataState
 
     fun getHistoricalDataForDay(fromSymbol: String, numberOfDays: Int) {
         viewModelScope.launch {
@@ -48,6 +47,14 @@ class CoinViewModel @Inject constructor(
         viewModelScope.launch {
             repo.getHistoricalDataForMinute(fromSymbol, numberOfDays).collect {
                 mutableHistoricalDataListState.value = it
+            }
+        }
+    }
+
+    fun getCoinComparisonData(symbol: String) {
+        viewModelScope.launch {
+            repo.getCoinComparisonData(symbol).collect {
+                mutableComparisonDataState.value = it
             }
         }
     }

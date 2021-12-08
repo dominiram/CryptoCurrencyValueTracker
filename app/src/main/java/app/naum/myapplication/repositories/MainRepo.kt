@@ -5,9 +5,12 @@ import app.naum.myapplication.database.CryptoDatabase
 import app.naum.myapplication.models.GraphCoordinatesModel
 import app.naum.myapplication.network.models.CryptoModel
 import app.naum.myapplication.network.APIService
+import app.naum.myapplication.network.models.CoinComparisonResponseWrapper
+import app.naum.myapplication.network.models.CryptoComparisonModel
 import app.naum.myapplication.network.models.HistoricalCryptoData
 import app.naum.myapplication.utils.DataState
 import app.naum.myapplication.utils.NetworkToDatabaseCryptoModelMapper
+import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.lang.Exception
@@ -87,6 +90,17 @@ class MainRepo constructor(
                     numberOfDays
                 ) //.data.data.onEach {  }
             emit(DataState.Success(getGraphCoordinatesModel(historicalList.data.data)))
+        } catch (e: Exception) {
+            emit(DataState.Error(e))
+        }
+    }
+
+    suspend fun getCoinComparisonData(symbol: String): Flow<DataState<CoinComparisonResponseWrapper>> = flow {
+        emit(DataState.Loading)
+        try {
+            val comparisonModel = apiService.getCoinComparisonData(symbol, "BTC,ETH,EVN,DOGE,ZEC,USD,EUR")
+            val model = Gson().fromJson(comparisonModel.get(symbol), CryptoComparisonModel::class.java)
+            emit(DataState.Success(CoinComparisonResponseWrapper(model)))
         } catch (e: Exception) {
             emit(DataState.Error(e))
         }

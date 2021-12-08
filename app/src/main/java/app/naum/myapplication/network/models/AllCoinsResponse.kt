@@ -16,5 +16,4 @@ data class AllCoinsResponse(
     val RateLimit: JsonObject,
     val HasWarning: Boolean,
     val Type: Int
-//    val coinList: List<CryptoModel>
 )

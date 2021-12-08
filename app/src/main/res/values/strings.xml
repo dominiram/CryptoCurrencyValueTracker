@@ -10,5 +10,12 @@
     <string name="compare_by_day">by Day</string>
     <string name="by_hour">by Hour</string>
     <string name="by_minute">by Minute</string>
-    <string name="error_occured">An error has occured, probably due to no internet connection</string>
+    <string name="error_occured">An error has occurred, probably due to no internet connection</string>
+    <string name="compared_to_label_btc">Compared to BTC: </string>
+    <string name="compared_to_label_eth">Compared to ETH: </string>
+    <string name="compared_to_label_evn">Compared to EVN: </string>
+    <string name="compared_to_label_doge">Compared to DOGE: </string>
+    <string name="compared_to_label_zec">Compared to ZEC: </string>
+    <string name="compared_to_label_usd">Compared to USD: </string>
+    <string name="compared_to_label_eur">Compared to EUR: </string>
 </resources>

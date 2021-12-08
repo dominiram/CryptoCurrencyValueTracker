@@ -1,9 +1,5 @@
 package app.naum.myapplication.network.models
 
-data class CryptoComparisonResponse(
-    val comparison: CryptoComparisonModel
-)
-
 data class CryptoComparisonModel(
     val BTC: Double,
     val ETH: Double,
