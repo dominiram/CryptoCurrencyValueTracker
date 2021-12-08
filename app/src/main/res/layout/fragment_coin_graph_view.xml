@@ -21,9 +21,11 @@
 
         <app.naum.myapplication.views.GraphViewCanvas
             android:id="@+id/graphViewCanvas"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginEnd="4dp"
             app:layout_constraintBottom_toBottomOf="@+id/y_coordinate_container"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/y_coordinate_container"
             app:layout_constraintTop_toTopOf="@+id/y_coordinate_container" />
 
